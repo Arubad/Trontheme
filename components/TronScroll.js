@@ -2354,17 +2354,9 @@ export default function TronScroll() {
         {/* FIXED: INTRO OVERLAY */}
         {loaded && (
           <div
+            className="tron-intro-overlay"
             style={{
-              position: 'fixed',
-              inset: 0,
-              zIndex: 10,
               opacity: introOpacity,
-              transition: 'opacity 0.4s ease',
-              pointerEvents: 'none',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'center',
             }}
           >
             <div className="intro-text">
@@ -2393,18 +2385,10 @@ export default function TronScroll() {
           return (
             <div
               key={section.id}
+              className="tron-section-overlay"
               style={{
-                position: 'fixed',
-                inset: 0,
-                zIndex: 10,
                 opacity,
-                transition: 'opacity 0.3s ease',
                 pointerEvents: opacity > 0.5 ? 'auto' : 'none',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'flex-start',
-                paddingLeft: 'clamp(1.5rem, 6vw, 7rem)',
-                paddingRight: 'clamp(1.5rem, 6vw, 7rem)',
               }}
             >
               <Comp />

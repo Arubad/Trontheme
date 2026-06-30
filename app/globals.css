@@ -1269,10 +1269,6 @@ body {
   letter-spacing: 0.02em;
 }
 
-/* ═══════════════════════════════════════════════════════
-   EDUCATION FLOWCHART
-   ═══════════════════════════════════════════════════════ */
-
 .edu-flowchart {
   display: flex;
   flex-direction: row;
@@ -1283,7 +1279,7 @@ body {
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* IE/Edge */
   max-width: 100%;
-  padding: 1rem 0.2rem;
+  padding: 1.5rem 0.2rem;
   align-items: center;
 }
 
@@ -1309,9 +1305,15 @@ body {
   border-radius: 4px;
   padding: 0.8rem 1rem;
   position: relative;
-  transition: border-color 0.3s;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   animation: nodePop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
   flex-shrink: 0;
+}
+
+.edu-node:hover {
+  border-color: var(--tron-cyan);
+  box-shadow: 0 0 15px rgba(0, 200, 255, 0.2);
+  transform: translateY(-4px);
 }
 
 @media (max-width: 720px) {
@@ -1326,7 +1328,6 @@ body {
     transform: scale(0.82) translateY(14px);
   }
   to {
-    opacity: 1;
     transform: scale(1) translateY(0);
   }
 }
@@ -1382,6 +1383,12 @@ body {
   background: rgba(0, 200, 255, 0.06);
   box-shadow: 0 0 10px rgba(0, 200, 255, 0.2);
   flex-shrink: 0;
+  transition: all 0.3s;
+}
+
+.edu-node:hover .edu-node-dot {
+  box-shadow: 0 0 15px var(--tron-cyan);
+  background: rgba(0, 200, 255, 0.15);
 }
 
 .edu-node--active .edu-node-dot {
@@ -1389,8 +1396,7 @@ body {
 }
 
 @keyframes nodePulse {
-  0%,
-  100% {
+  0%, 100% {
     box-shadow: 0 0 10px rgba(0, 200, 255, 0.2);
   }
   50% {
@@ -1469,20 +1475,22 @@ body {
   position: absolute;
   left: -100%;
   top: 0;
-  width: 40%;
+  width: 50%;
   height: 100%;
   background: linear-gradient(
     90deg,
     transparent,
+    #fff,
     var(--tron-cyan),
     transparent
   );
-  animation: beamFlow 2s linear infinite;
+  filter: drop-shadow(0 0 5px var(--tron-cyan));
+  animation: beamFlow 2.5s cubic-bezier(0.25, 1, 0.5, 1) infinite;
 }
 
 @keyframes beamFlow {
   from {
-    left: -40%;
+    left: -50%;
   }
   to {
     left: 100%;
@@ -1494,9 +1502,22 @@ body {
   right: -2px;
   top: 50%;
   transform: translate(50%, -50%);
-  font-size: 0.55rem;
-  color: rgba(0, 200, 255, 0.4);
+  font-size: 0.6rem;
+  color: var(--tron-cyan);
   line-height: 1;
+  text-shadow: 0 0 8px var(--tron-cyan);
+  animation: arrowPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes arrowPulse {
+  0%, 100% {
+    opacity: 0.4;
+    text-shadow: 0 0 2px var(--tron-cyan);
+  }
+  50% {
+    opacity: 1;
+    text-shadow: 0 0 12px var(--tron-cyan);
+  }
 }
 
 /* ═══════════════════════════════════════════════════════
@@ -3463,4 +3484,66 @@ body.is-dragging-scrollbar {
 @keyframes trailFlicker {
   0%, 100% { opacity: 0.7; }
   50% { opacity: 1; }
+}
+
+/* ── SECTION OVERLAYS AND MOBILE SCROLL SUPPORT ───────── */
+
+.tron-intro-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.4s ease;
+  padding: 0 1.2rem;
+  box-sizing: border-box;
+}
+
+.tron-section-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: clamp(1.5rem, 6vw, 7rem);
+  padding-right: clamp(1.5rem, 6vw, 7rem);
+  transition: opacity 0.3s ease;
+  box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+  .tron-section-overlay {
+    align-items: flex-start;
+    padding-top: 5rem;      /* Leave room for HUD top panel */
+    padding-bottom: 3.5rem;  /* Leave room for dots and progress bar */
+    padding-left: 1.2rem;
+    padding-right: 1.2rem;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .tron-section-content {
+    width: 100% !important;
+    max-height: none !important;
+    overflow-y: visible !important;
+    overflow-x: visible !important;
+    padding: 0 0.2rem !important;
+  }
+
+  .skills-categories {
+    max-height: none !important;
+  }
+
+  .logs-cms-wrap {
+    max-height: none !important;
+  }
+
+  /* Make the header spacing and content flow beautifully on smaller screens */
+  .tron-header {
+    margin-bottom: 1.2rem;
+  }
 }
